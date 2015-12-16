@@ -20,14 +20,19 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
 from django.core.mail import mail_managers
-
 from registration import signals
 from registration.models import RegistrationProfile
-from registration.backends.default import DefaultBackend
+from registration.views import RegistrationView
 from apply.models import Organization
+from accounts.forms import RegistrationForm
+from django.core.urlresolvers import reverse_lazy
+from django.contrib import messages
+from django.utils.translation import ugettext as _
 
 
-class GanetimgrBackend(DefaultBackend):
+class GanetimgrRegistrationView(RegistrationView):
+    form_class = RegistrationForm
+    success_url = reverse_lazy('user-instances')
 
     def register(self, request, **kwargs):
         username, email, password, firstname, lastname, organization, telephone = kwargs['username'], kwargs['email'], kwargs['password1'], kwargs['name'], kwargs['surname'], kwargs['organization'], kwargs['phone']
@@ -56,13 +61,28 @@ class GanetimgrBackend(DefaultBackend):
         # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())
         registration_profile = RegistrationProfile.objects.get(user=new_user)
-        message = render_to_string('registration/activation_email.txt',
-                                   { 'activation_key': registration_profile.activation_key,
-                                     'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
-                                     'site': site,
-                                     'user': new_user })
+        message = render_to_string(
+            'registration/activation_email.txt',
+            {
+                'activation_key': registration_profile.activation_key,
+                'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
+                'site': site,
+                'user': new_user
+            }
+        )
         mail_managers(subject, message)
-        signals.user_registered.send(sender=self.__class__,
-                                     user=new_user,
-                                     request=request)
+        signals.user_registered.send(
+            sender=self.__class__,
+            user=new_user,
+            request=request
+        )
+        messages.add_message(
+            request,
+            messages.INFO,
+            _(
+                'An email has been sent to the system administrator.'
+                ' You will be soon notified about the activation of'
+                ' your account.'
+            )
+        )
         return new_user
