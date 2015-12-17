@@ -16,7 +16,7 @@
 #
 import re
 import random
-import sha
+import hashlib
 import base64
 import os
 import ipaddr
@@ -1175,8 +1175,8 @@ class InstanceActionManager(models.Manager):
             action=action
         ).exclude(activation_key='ALREADY_ACTIVATED'):
             action.expire_now()
-        salt = sha.new(str(random.random())).hexdigest()[:5]
-        activation_key = sha.new(salt + user.username).hexdigest()
+        salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
+        activation_key = hashlib.sha1(salt + user.username).hexdigest()
         return self.create(
             applicant=user,
             instance=instance,

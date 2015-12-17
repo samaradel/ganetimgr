@@ -45,7 +45,7 @@ class GanetimgrRegistrationView(RegistrationView):
         new_user.first_name = firstname
         new_user.last_name = lastname
         new_user.save()
-        profile = new_user.get_profile()
+        profile = new_user.userprofile
         try:
             organization = Organization.objects.get(title=organization)
         except Organization.DoesNotExist:
