@@ -34,14 +34,30 @@ class GanetimgrRegistrationView(RegistrationView):
     form_class = RegistrationForm
     success_url = reverse_lazy('user-instances')
 
-    def register(self, request, **kwargs):
-        username, email, password, firstname, lastname, organization, telephone = kwargs['username'], kwargs['email'], kwargs['password1'], kwargs['name'], kwargs['surname'], kwargs['organization'], kwargs['phone']
+    def register(self, request, form, **kwargs):
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password1')
+            firstname = form.cleaned_data.get('name')
+            lastname = form.cleaned_data.get('surname')
+            organization = form.cleaned_data.get('organization')
+            telephone = form.cleaned_data.get('phone')
         if Site._meta.installed:
             site = Site.objects.get_current()
         else:
             site = RequestSite(request)
-        new_user = RegistrationProfile.objects.create_inactive_user(username, email,
-                                                                    password, site, send_email=False)
+        new_user = RegistrationProfile.objects.create_inactive_user(
+            site,
+            send_email=False,
+            **{
+                'username': username,
+                'password': password,
+                'email': email,
+                'first_name': firstname,
+                'last_name': lastname,
+            }
+        )
         new_user.first_name = firstname
         new_user.last_name = lastname
         new_user.save()
