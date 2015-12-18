@@ -1,43 +1,70 @@
-# encoding: utf-8
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
-class Migration(SchemaMigration):
-    
-    def forwards(self, orm):
-        
-        # Adding model 'Cluster'
-        db.create_table('ganeti_cluster', (
-            ('username', self.gf('django.db.models.fields.CharField')(max_length=64, null=True, blank=True)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=50, db_index=True)),
-            ('description', self.gf('django.db.models.fields.CharField')(max_length=128, null=True, blank=True)),
-            ('hostname', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('password', self.gf('django.db.models.fields.CharField')(max_length=64, null=True, blank=True)),
-            ('port', self.gf('django.db.models.fields.PositiveIntegerField')(default=5080)),
-        ))
-        db.send_create_signal('ganeti', ['Cluster'])
-    
-    
-    def backwards(self, orm):
-        
-        # Deleting model 'Cluster'
-        db.delete_table('ganeti_cluster')
-    
-    
-    models = {
-        'ganeti.cluster': {
-            'Meta': {'object_name': 'Cluster'},
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '128', 'null': 'True', 'blank': 'True'}),
-            'hostname': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'password': ('django.db.models.fields.CharField', [], {'max_length': '64', 'null': 'True', 'blank': 'True'}),
-            'port': ('django.db.models.fields.PositiveIntegerField', [], {'default': '5080'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'db_index': 'True'}),
-            'username': ('django.db.models.fields.CharField', [], {'max_length': '64', 'null': 'True', 'blank': 'True'})
-        }
-    }
-    
-    complete_apps = ['ganeti']
+from django.db import models, migrations
+from django.conf import settings
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('auth', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+    ]
+
+    operations = [
+        migrations.CreateModel(
+            name='Cluster',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('hostname', models.CharField(max_length=128)),
+                ('slug', models.SlugField()),
+                ('port', models.PositiveIntegerField(default=5080)),
+                ('description', models.CharField(max_length=128, null=True, blank=True)),
+                ('username', models.CharField(max_length=64, null=True, blank=True)),
+                ('password', models.CharField(max_length=64, null=True, blank=True)),
+                ('fast_create', models.BooleanField(default=False, help_text=b'Allow fast instance creations on this cluster using the admin interface', verbose_name=b'Enable fast instance creation')),
+                ('use_gnt_network', models.BooleanField(default=True, help_text=b'Set to True only if you use gnt-network.', verbose_name=b'Cluster uses gnt-network')),
+                ('disable_instance_creation', models.BooleanField(default=False, help_text=b'True disables setting a network at the application review form and blocks instance creation', verbose_name=b'Disable Instance Creation')),
+                ('disabled', models.BooleanField(default=False)),
+            ],
+            options={
+                'permissions': (('view_instances', 'Can view all instances'),),
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='InstanceAction',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('instance', models.CharField(max_length=255, blank=True)),
+                ('action', models.IntegerField(choices=[(1, b'reinstall'), (2, b'destroy'), (3, b'rename'), (4, b'mailchange')])),
+                ('action_value', models.CharField(max_length=255, null=True)),
+                ('activation_key', models.CharField(max_length=40)),
+                ('filed', models.DateTimeField(auto_now_add=True)),
+                ('last_updated', models.DateTimeField(auto_now=True)),
+                ('operating_system', models.CharField(max_length=255, null=True)),
+                ('applicant', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('cluster', models.ForeignKey(blank=True, to='ganeti.Cluster', null=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Network',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('description', models.CharField(max_length=255)),
+                ('link', models.CharField(max_length=255)),
+                ('mode', models.CharField(max_length=64, choices=[(b'bridged', b'Bridged'), (b'routed', b'Routed')])),
+                ('cluster_default', models.BooleanField(default=False)),
+                ('ipv6_prefix', models.CharField(max_length=255, null=True, blank=True)),
+                ('cluster', models.ForeignKey(to='ganeti.Cluster')),
+                ('groups', models.ManyToManyField(to='auth.Group', null=True, blank=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+    ]
