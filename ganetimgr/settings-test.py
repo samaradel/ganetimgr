@@ -68,7 +68,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_markdown',
     'accounts',
-    'south',
     'registration',
     'ganeti',
     'apply',
@@ -93,6 +92,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 
+SECRET_KEY = 'test'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -103,7 +103,7 @@ AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',  # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'ganetimgr',                # Or path to database file if using sqlite3.
+        'NAME': 'ganetimgr.db',                # Or path to database file if using sqlite3.
     }
 }
 
@@ -146,3 +146,6 @@ RECAPTCHA_USE_SSL = True
 ACCOUNT_ACTIVATION_DAYS = 10
 LOGIN_URL = '/user/login'
 LOGIN_REDIRECT_URL = '/'
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
