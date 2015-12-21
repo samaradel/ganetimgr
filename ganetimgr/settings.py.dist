@@ -78,7 +78,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'middleware.UserMessages.UserMessageMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 )
 
 TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
