@@ -10,7 +10,7 @@
 
 	<script>
 		$(document).ready(function () {
-			 $('#pass_change_placeholder').load("{% url 'pass_change' %}");
+			$('#pass_change_placeholder').load("{% url 'pass_change' %}");
 			// load ssh keys manager
 			$('#manage_sshkeys_placeholder').load("{% url 'user-keys' %}");
 			// change user mail
@@ -20,6 +20,29 @@
 			$('#other_placeholder').load("{% url 'other-change' %}", function () {
             	$("#id_organization").select2({dropdownAutoWidth : true});
 			 });
+
+			// hide networks that are going to be deleted
+			$('#other_placeholder').on('click', '.user-networks .delete', function () {
+				$(this).hide();
+				$(this).parent().addClass('to-be-deleted').find('input.network').prop('disabled', true);
+			});
+
+			$('#other_placeholder').on('focusout', '.user-networks .network', function () {
+				var input = $(this);
+				if (input.val()) {
+					input.val(input.val().trim());
+					$.get(
+						$('#other_placeholder .alert .ip').data('validate') + '?ip=' + $('#other_placeholder .alert .ip').text() + '&network=' + $(this).val(), function (data) {
+							if (data.in_network === true) {
+								input.addClass('success');
+							} else if (data.in_network === false) {
+								input.addClass('warning');
+							} else {
+								input.addClass('danger');
+							}
+					});
+				}
+			});
 		});
 	</script>
 	<style>

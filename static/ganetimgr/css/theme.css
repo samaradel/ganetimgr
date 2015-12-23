@@ -1913,3 +1913,39 @@ iframe#video {
   margin-top: 20px;
   border: none;
 }
+
+/* user profile networks */
+.user-networks input[name*="DELETE"]{
+  display: none;
+}
+
+.user-networks input.success {
+  background: #DFF0D8;
+}
+.user-networks input.success ~ .network-check.success {
+  display: block;
+}
+
+.user-networks input.warning {
+  background: #FCF8E3;
+}
+
+.user-networks input.warning ~ .network-check.warning {
+  display: block;
+}
+
+.user-networks input.danger {
+  background: #F2DEDE;
+}
+
+.user-networks input.danger ~ .network-check.danger {
+  display: block;
+}
+
+.user-networks .network-check {
+  display: none;
+}
+
+.to-be-deleted {
+  opacity: 0.1;
+}

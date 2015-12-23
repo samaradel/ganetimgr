@@ -34,4 +34,5 @@ urlpatterns = patterns(
     url(r'^pass_change/$', 'django.contrib.auth.views.password_change', {'template_name':'users/pass_change.html', 'post_change_redirect':'pass_change_done'}, name="pass_change"),
     url(r'^pass_change/done/$', 'django.contrib.auth.views.password_change_done', {'template_name':'users/pass_change_done.html'}, name="pass_change_done" ),
     url(r'^pass_change/notify/$', views.pass_notify, name="pass_change_notify"),
+    url(r'^validate_ip/$', views.validate_ip, name='validate_ip'),
 )

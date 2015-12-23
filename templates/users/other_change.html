@@ -63,7 +63,7 @@
             {% trans "Changed successfully" %}
         {% endif %}
     </div>
-    <form method="POST" id="change_other_form" class="form">
+    <form autocomplete='off' method="POST" id="change_other_form" class="form">
 		{% csrf_token %}
 		{% for field in form %}
             <div class="control-group {% if field.errors %}error{% endif %}">
@@ -75,9 +75,33 @@
                 </div>
             </div>
 		{% endfor %}
+        <h4>Access from specific networks</h4>
+        <p>{% blocktrans %}You can declare specific networks to login from. Be careful not to lock yourself out!{% endblocktrans %}</p>
+        <div class="alert alert-info" role="alert">{% trans "Your ip is" %} <span class="ip" data-validate="{% url 'validate_ip' %}">{{ ip }}</span></div>
+         <div class="user-networks">
+            {% for f in formset.management_form %}
+                {{ f }}
+            {% endfor %}
+            {% for f in formset.forms %}
+                <div style="margin-top: 10px;">
+                    {% render_field f.network class+="network input-xlarge" style+="width:90%;" placeholder=f.network.label|capfirst  %}
+                    {% if f.network.errors %}
+                        <span class="help-block"> {{ f.network.errors|join:", " }} </span>
+                    {% endif %}
+                    {{ f.user }}
+                    {{ f.id }}
+                    {% if f.instance.id %}
+                        <label class="delete text-danger" style="display: inline; color: #bd362f;" for="{{ f.DELETE.id_for_label }}"><i class="fa fa-times"></i>{{ f.DELETE }}</label>
+                    {% endif %}
+                    <div class=" help-block network-check success">{% trans 'You are in this network right now!' %}</div>
+                    <div class="network-check warning">{% trans 'Warning: You are not in this network!' %}</div>
+                    <div class="network-check danger">{% trans 'This network does not have a valid format!' %}</div>
+                </div>
+            {% endfor %}
+        </div>
         <div class="control-group">
             <div class="controls">
-	           <button id="change_other_btn" class="btn btn-success">{% trans "Change" %}</button>
+	           <button id="change_other_btn" class="btn btn-success">{% trans "Update" %}</button>
             </div>
         </div>
 	</form>

@@ -1,3 +1,18 @@
+1.6.1 RELEASE
+Features/Bugfixing release
+
+Requirements:
+	- South migration: python manage.py migrate
+	- Update settings.py to settings.py.dist
+
+New Features:
+	- Add user networks, in order to login from trusted locations
+	- Update to django 1.7.7
+
+Changes:
+	- Change middleware classes order in order to pass messages to anonymous users
+
+
 1.6 RELEASE
 Features/Bugfixing release
 

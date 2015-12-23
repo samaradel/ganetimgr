@@ -18,7 +18,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string, get_template
 from django.template.context import RequestContext
 from django.utils.safestring import mark_safe
-
+from django.forms import inlineformset_factory
 from django.utils.translation import ugettext_lazy as _
 
 from ganeti.models import InstanceAction
@@ -31,7 +31,9 @@ from apply.forms import (
 )
 from apply.utils import check_mail_change_pending
 from apply.models import SshPublicKey
-
+from accounts.models import UserNetwork, UserProfile
+from accounts.utils import get_client_ip
+import ipaddress
 
 if 'oauth2_provider' in settings.INSTALLED_APPS:
     from oauth2_provider.decorators import protected_resource
@@ -221,18 +223,22 @@ def name_change(request):
 @login_required
 def other_change(request):
     changed = False
-    if request.method == "GET":
-        form = OrganizationPhoneChangeForm(instance=request.user.userprofile)
-    elif request.method == "POST":
-        form = OrganizationPhoneChangeForm(request.POST, instance=request.user.userprofile)
-        if form.is_valid():
-            form.save()
-            changed = True
+    user_network_formset = inlineformset_factory(UserProfile, UserNetwork, extra=1)
+    formset = user_network_formset(request.POST or None, instance=request.user.userprofile)
+    form = OrganizationPhoneChangeForm(request.POST or None, instance=request.user.userprofile)
+    if form.is_valid() and formset.is_valid():
+        form.save()
+        formset.save()
+        # re-initialize formset in order to display the extra field.
+        formset = user_network_formset(None, instance=request.user.userprofile)
+        changed = True
     return render(
         request,
         'users/other_change.html',
         {
+            'ip': get_client_ip(request),
             'form': form,
+            'formset': formset,
             'changed': changed
         }
     )
@@ -309,3 +315,36 @@ def pass_notify(request):
         return HttpResponse("mail sent", content_type="text/plain")
     else:
         return HttpResponse("mail not sent", content_type="text/plain")
+
+
+@login_required
+def validate_ip(request):
+    ip = request.GET.get('ip')
+    network = request.GET.get('network')
+    print ip, network
+    if ip and network:
+        try:
+            if (
+                ipaddress.ip_address(ip) in ipaddress.ip_network(network, strict=False)
+            ):
+                return HttpResponse(
+                    json.dumps(
+                        {'in_network': True}
+                    ),
+                    content_type='application/json'
+                )
+        except:
+            return HttpResponse(
+                json.dumps(
+                    {'in_network': 'error'}
+                ),
+                content_type='application/json'
+            )
+        return HttpResponse(
+            json.dumps(
+                {'in_network': False}
+            ),
+            content_type='application/json'
+        )
+    else:
+        return HttpResponseBadRequest('Bad request')

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-21 13:42+0200\n"
+"POT-Creation-Date: 2015-12-23 14:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Leonidas Poulopoulos <alex@noc.grnet.gr>\n"
 "Language-Team: GRNET NOC <noc@noc.grnet.gr>\n"
@@ -232,12 +232,12 @@ msgstr ""
 "Το αίτημά σας έχει καταχωρηθεί με αναγνωριστικό #%d και η επεξεργασία του θα "
 "ξεκινήσει σύντομα."
 
-#: apply/views/user.py:263
+#: apply/views/user.py:269
 #, python-format
 msgid "The following keys were skipped because they already exist:<br />%s"
 msgstr "Τα ακόλουθα κλειδιά υπήρχαν ήδη και δεν αντικαταστάθηκαν:<br />%s"
 
-#: apply/views/user.py:292
+#: apply/views/user.py:298
 msgid "Password changed!"
 msgstr "Ο κωδικός άλλαξε!"
 
@@ -301,27 +301,27 @@ msgstr "Δεν επιτρέπεται prefix με μήκος < %s"
 msgid "%(address)s is not a valid address"
 msgstr "%(address)s δεν είναι αποδεκτή μορφή διεύθυνσης"
 
-#: ganeti/models.py:302
+#: ganeti/models.py:300
 msgid "Running"
 msgstr "Ενεργό"
 
-#: ganeti/models.py:302
+#: ganeti/models.py:300
 msgid "Stopped"
 msgstr "ανενεργό"
 
-#: ganeti/models.py:304
+#: ganeti/models.py:302
 msgid "Running, should be stopped"
 msgstr "Ενεργό, θα έπρεπε να είναι ανενεργό."
 
-#: ganeti/models.py:304
+#: ganeti/models.py:302
 msgid "Stopped, should be running"
 msgstr "Ανεργό, θα έπρεπε να είναι ενεργό"
 
-#: ganeti/models.py:308
+#: ganeti/models.py:306
 msgid "modifying"
 msgstr "γίνεται τροποποίηση των παραμέτρων της μηχανής"
 
-#: ganeti/models.py:1060
+#: ganeti/models.py:1058
 msgid "creating"
 msgstr "η μηχανή δημιουργείται"
 
@@ -354,8 +354,8 @@ msgstr "Το email δεν μπόρεσετ να αποσταλλεί"
 msgid "Mail sent"
 msgstr "Το email στάλθηκε"
 
-#: ganeti/fields/jsonfield/fields.py:31 ganeti/fields/jsonfield/fields.py:43
-#: ganeti/fields/jsonfield/fields.py:81
+#: ganeti/fields/jsonfield/fields.py:28 ganeti/fields/jsonfield/fields.py:40
+#: ganeti/fields/jsonfield/fields.py:78
 msgid "Enter valid JSON"
 msgstr "Εισάγετε έγκυρο JSON"
 
@@ -391,6 +391,20 @@ msgstr "Ανικανότητα επικοινώνιας με το api."
 msgid "English"
 msgstr "English"
 
+#: middleware/ForceLogout.py:39
+msgid "You have exceeded login date."
+msgstr "Έχετε υπερβεί το χρονικό διάστημα χρήσης της υπηρεσίας."
+
+#: middleware/ForceLogout.py:55
+#, python-format
+msgid "Network (%s) is not a valid network"
+msgstr ""
+
+#: middleware/ForceLogout.py:63
+#, python-format
+msgid "Your Ip (%s) is not on your networks. Logging you out!"
+msgstr "Η Ip διευθυνσή σας (%s) δεν ανήκει στα δίκτυα που έχετε δηλώσει!"
+
 #: middleware/UserMessages.py:53
 #, python-format
 msgid ""
@@ -415,6 +429,15 @@ msgstr "Κείμενο"
 #: notifications/forms.py:45
 msgid "Recipients"
 msgstr "Παραλήπτες"
+
+#: regbackends/ganetimgr/__init__.py:99
+#: templates/registration/registration_complete.html:20
+msgid ""
+"An email has been sent to the system administrator. You will be soon "
+"notified about the activation of your account."
+msgstr ""
+"Ένα email έχει αποσταλλεί στο διαχειριστή του συστήματος. Θα ειδοποιηθείτε "
+"σύντομα για την ενεργοποίηση του λογαριασμού σας"
 
 #: templates/500.html:16
 msgid "Internal error"
@@ -480,7 +503,7 @@ msgstr "Αιτήσεις"
 #: templates/jobs/jobs.html:35 templates/news/news.html:30
 #: templates/notifications/create.html:8
 #: templates/notifications/detail.html:10 templates/stats/statistics.html:264
-#: templates/users/idle_accounts.html:59 templates/users/profile.html:38
+#: templates/users/idle_accounts.html:59 templates/users/profile.html:60
 #: templates/users/user_info.html:279
 msgid "Home"
 msgstr "Αρχική"
@@ -535,7 +558,7 @@ msgstr "Αδρανείς Λογαριασμοί"
 
 #: templates/base.html:221 templates/news/news.html:24
 #: templates/news/news.html.py:31 templates/news/news.html:38
-#: templates/users/login.html:45
+#: templates/users/login.html:57
 msgid "Latest News"
 msgstr "Τελευταία Νέα"
 
@@ -1063,7 +1086,7 @@ msgstr "Διαμόρφωση"
 msgid "!"
 msgstr "!"
 
-#: templates/instances/instance.html:383
+#: templates/instances/instance.html:383 templates/users/other_change.html:104
 msgid "Update"
 msgstr "Ενημέρωση"
 
@@ -1332,7 +1355,7 @@ msgstr "Υποβάλλετε νέο αίτημα από τη σελίδα λεπ
 msgid "You are about to change your email to"
 msgstr "Πρόκειται να αλλάξετε το email σας σε"
 
-#: templates/instances/verify_action.html:74 templates/users/profile.html:67
+#: templates/instances/verify_action.html:74 templates/users/profile.html:89
 msgid "Change Email"
 msgstr "Αλλαγή e-mail"
 
@@ -1491,7 +1514,7 @@ msgid "Account registered at"
 msgstr "Ο λογαριασμός σας στην υπηρεσία"
 
 #: templates/registration/password_change_form.html:5
-#: templates/users/profile.html:59
+#: templates/users/profile.html:81
 msgid "Change Password"
 msgstr "Αλλαγή κωδικού"
 
@@ -1556,14 +1579,6 @@ msgstr "Εγγραφή"
 #: templates/registration/registration_complete.html:16
 msgid "Registration Email Sent"
 msgstr "Στάλθηκε Email Εγγραφής"
-
-#: templates/registration/registration_complete.html:20
-msgid ""
-"An email has been sent to the system administrator. You will be soon "
-"notified about the activation of your account."
-msgstr ""
-"Ένα email έχει αποσταλλεί στο διαχειριστή του συστήματος. Θα ειδοποιηθείτε "
-"σύντομα για την ενεργοποίηση του λογαριασμού σας"
 
 #: templates/registration/registration_complete.html:21
 msgid "Back to"
@@ -1731,16 +1746,17 @@ msgstr "E-mail"
 msgid "Last Login"
 msgstr "Τελευταία Είσοδος"
 
-#: templates/users/login.html:8 templates/users/login.html.py:74
-#: templates/users/login.html:104
+#: templates/users/login.html:8 templates/users/login.html.py:86
+#: templates/users/login.html:116
 msgid "Login"
 msgstr "Είσοδος"
 
-#: templates/users/login.html:54
+#: templates/users/login.html:66
 msgid "Welcome"
 msgstr "Καλωσήλθατε"
 
-#: templates/users/login.html:56
+#: templates/users/login.html:68
+#, python-format
 msgid ""
 "\n"
 "\t\t\t\t\t\t\t\t\t\t\t<p>Welcome to %(name)s's %(title)s service.</p>\n"
@@ -1756,8 +1772,8 @@ msgstr ""
 "τρέχουσας σελίδας και στη συνέχεια αιτηθείτε ένα νέο λογαριασμό χρήστη.</p>\n"
 "\t\t\t\t\t\t\t\t\t\t"
 
-
-#: templates/users/login.html:63
+#: templates/users/login.html:75
+#, python-format
 msgid ""
 "\n"
 "\t\t\t\t\t\t\t\t\t\t\t<p>If you already have an account, you can log in "
@@ -1773,16 +1789,15 @@ msgstr ""
 "</p>\n"
 "\t\t\t\t\t\t\t\t\t\t"
 
-
-#: templates/users/login.html:77
+#: templates/users/login.html:89
 msgid "Your username and password didn't match. Please try again."
 msgstr "Ο συνδυασμός ονόματος χρήστη και κωδικού δεν είναι έγκυρος"
 
-#: templates/users/login.html:109
+#: templates/users/login.html:121
 msgid "Forgot password?"
 msgstr "Ξεχάσατε τον κωδικό σας;"
 
-#: templates/users/login.html:110
+#: templates/users/login.html:122
 msgid "Register a new account"
 msgstr "Εγγραφή νέου χρήστη"
 
@@ -1836,8 +1851,7 @@ msgstr "έχει αλλάξει με επιτυχία σε"
 msgid "we don't know your name yet"
 msgstr "δε γνωρίζουμε το όνομά σας ακομα"
 
-#: templates/users/name_change.html:88 templates/users/other_change.html:80
-#: templates/users/pass_change.html:74
+#: templates/users/name_change.html:88 templates/users/pass_change.html:74
 msgid "Change"
 msgstr "Αλλαγή"
 
@@ -1848,6 +1862,30 @@ msgstr "Επιλέξτε φορέα και τηλέφωνο"
 #: templates/users/other_change.html:63
 msgid "Changed successfully"
 msgstr "Άλλαξε επιτυχώς"
+
+#: templates/users/other_change.html:79
+msgid ""
+"You can declare specific networks to login from. Be careful not to lock "
+"yourself out!"
+msgstr ""
+"Μπορείτε να ορίσετε συγκεκριμένα δίκτυα από τα οποία θα συνδέεστε. Προσοχή, "
+"μην κλειδωθείτε έξω από την υπηρεσία."
+
+#: templates/users/other_change.html:80
+msgid "Your ip is"
+msgstr "Η διευθυνσή σας είναι"
+
+#: templates/users/other_change.html:96
+msgid "You are in this network right now!"
+msgstr "Ανήκετε σε αυτό το δίκτυο!"
+
+#: templates/users/other_change.html:97
+msgid "Warning: You are not in this network!"
+msgstr "Προσοχή: Δεν ανήκετε σε αυτό το δίκτυο."
+
+#: templates/users/other_change.html:98
+msgid "This network does not have a valid format!"
+msgstr "Λάθος μορφή δίκτυου."
 
 #: templates/users/pass_change.html:58
 msgid ""
@@ -1874,23 +1912,23 @@ msgstr "επιτυχώς"
 msgid "about my profile"
 msgstr "σχετικά με το προφίλ μου"
 
-#: templates/users/profile.html:39
+#: templates/users/profile.html:61
 msgid "profile"
 msgstr "προφίλ"
 
-#: templates/users/profile.html:42 templates/users/profile.html.py:45
+#: templates/users/profile.html:64 templates/users/profile.html.py:67
 msgid "My profile"
 msgstr "Το προφίλ μου"
 
-#: templates/users/profile.html:51
+#: templates/users/profile.html:73
 msgid "Change Name"
 msgstr "Αλλαγή Ονοματεπώνυμου"
 
-#: templates/users/profile.html:77
+#: templates/users/profile.html:99
 msgid "Manage SSH Keys"
 msgstr "Διαχείριση SSH κλειδιών"
 
-#: templates/users/profile.html:85
+#: templates/users/profile.html:107
 msgid "Other"
 msgstr "Άλλο"
 
