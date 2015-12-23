@@ -50,3 +50,28 @@ class AccountsTestCase(TestCase):
     def test_user_profile(self):
         # there should also be a user profile
         self.user.userprofile.first_login
+
+
+class UserNetworkTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        # create a user
+        self.user = User.objects.create_user('accounttest', 'test@test.com', 'accounttest')
+
+    def test_user_networks(self):
+        networks = self.user.userprofile.usernetwork_set.all()
+        self.assertEqual(len(networks), 0)
+        self.client.login(username='accounttest', password='accounttest')
+
+        # make sure the user logged in successfully
+        self.assertEqual(int(self.client.session['_auth_user_id']), self.user.pk)
+
+        self.user.userprofile.usernetwork_set.create(network='1.1.11.1/32', user=self.user)
+        networks = self.user.userprofile.usernetwork_set.all()
+        self.assertEqual(len(networks), 1)
+
+        # make a request in order to be logged out
+        self.client.get('/')
+
+        # make sure the user was logged out
+        self.assertEqual(self.client.session.get('_auth_user_id'), None)
