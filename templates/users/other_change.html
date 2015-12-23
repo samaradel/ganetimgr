@@ -75,7 +75,7 @@
                 </div>
             </div>
 		{% endfor %}
-        <h4>Access from specific networks</h4>
+        <h4>{% trans "Access from specific networks" %}</h4>
         <p>{% blocktrans %}You can declare specific networks to login from. Be careful not to lock yourself out!{% endblocktrans %}</p>
         <div class="alert alert-info" role="alert">{% trans "Your ip is" %} <span class="ip" data-validate="{% url 'validate_ip' %}">{{ ip }}</span></div>
          <div class="user-networks">

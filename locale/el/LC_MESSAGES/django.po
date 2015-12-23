@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-23 14:22+0200\n"
+"POT-Creation-Date: 2015-12-23 14:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Leonidas Poulopoulos <alex@noc.grnet.gr>\n"
 "Language-Team: GRNET NOC <noc@noc.grnet.gr>\n"
@@ -503,7 +503,7 @@ msgstr "Αιτήσεις"
 #: templates/jobs/jobs.html:35 templates/news/news.html:30
 #: templates/notifications/create.html:8
 #: templates/notifications/detail.html:10 templates/stats/statistics.html:264
-#: templates/users/idle_accounts.html:59 templates/users/profile.html:60
+#: templates/users/idle_accounts.html:59 templates/users/profile.html:61
 #: templates/users/user_info.html:279
 msgid "Home"
 msgstr "Αρχική"
@@ -562,15 +562,15 @@ msgstr "Αδρανείς Λογαριασμοί"
 msgid "Latest News"
 msgstr "Τελευταία Νέα"
 
-#: templates/base.html:269
+#: templates/base.html:257
 msgid "This is a service provided by"
 msgstr "Αυτή η υπηρεσία παρέχεται από το"
 
-#: templates/base.html:293
+#: templates/base.html:281
 msgid "Info"
 msgstr "Περί"
 
-#: templates/base.html:300
+#: templates/base.html:288
 msgid "Service Terms"
 msgstr "Όροι Χρήσης"
 
@@ -1355,7 +1355,7 @@ msgstr "Υποβάλλετε νέο αίτημα από τη σελίδα λεπ
 msgid "You are about to change your email to"
 msgstr "Πρόκειται να αλλάξετε το email σας σε"
 
-#: templates/instances/verify_action.html:74 templates/users/profile.html:89
+#: templates/instances/verify_action.html:74 templates/users/profile.html:90
 msgid "Change Email"
 msgstr "Αλλαγή e-mail"
 
@@ -1514,7 +1514,7 @@ msgid "Account registered at"
 msgstr "Ο λογαριασμός σας στην υπηρεσία"
 
 #: templates/registration/password_change_form.html:5
-#: templates/users/profile.html:81
+#: templates/users/profile.html:82
 msgid "Change Password"
 msgstr "Αλλαγή κωδικού"
 
@@ -1863,6 +1863,10 @@ msgstr "Επιλέξτε φορέα και τηλέφωνο"
 msgid "Changed successfully"
 msgstr "Άλλαξε επιτυχώς"
 
+#: templates/users/other_change.html:78
+msgid "Access from specific networks"
+msgstr "Πρόσβαση απο συγκεκριμένα δίκτυα"
+
 #: templates/users/other_change.html:79
 msgid ""
 "You can declare specific networks to login from. Be careful not to lock "
@@ -1912,23 +1916,23 @@ msgstr "επιτυχώς"
 msgid "about my profile"
 msgstr "σχετικά με το προφίλ μου"
 
-#: templates/users/profile.html:61
+#: templates/users/profile.html:62
 msgid "profile"
 msgstr "προφίλ"
 
-#: templates/users/profile.html:64 templates/users/profile.html.py:67
+#: templates/users/profile.html:65 templates/users/profile.html.py:68
 msgid "My profile"
 msgstr "Το προφίλ μου"
 
-#: templates/users/profile.html:73
+#: templates/users/profile.html:74
 msgid "Change Name"
 msgstr "Αλλαγή Ονοματεπώνυμου"
 
-#: templates/users/profile.html:99
+#: templates/users/profile.html:100
 msgid "Manage SSH Keys"
 msgstr "Διαχείριση SSH κλειδιών"
 
-#: templates/users/profile.html:107
+#: templates/users/profile.html:108
 msgid "Other"
 msgstr "Άλλο"
 
@@ -2197,9 +2201,6 @@ msgstr ""
 
 #~ msgid "ViMa Statistics"
 #~ msgstr "Στατιστικά ViMa"
-
-#~ msgid "Please specify a network"
-#~ msgstr "Επιλέξτε ένα δίκτυο για τη σύνδεση της εικονικής μηχανής"
 
 #~ msgid "network"
 #~ msgstr "δίκτυο"
