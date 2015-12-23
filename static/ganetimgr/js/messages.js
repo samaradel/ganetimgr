@@ -16,7 +16,7 @@
             }
             var message_div = message_container.find('.message-template').clone();
             message_div.removeClass('message-template');
-            message_div.find('span').text(text);
+            message_div.find('span').html(text);
             message_div.addClass(css_class);
             message_container.append(message_div);
             message_container.show();
