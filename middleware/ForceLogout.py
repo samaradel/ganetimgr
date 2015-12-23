@@ -16,16 +16,52 @@
 #
 
 from django.contrib.auth import logout
+import ipaddress
+from django.contrib import messages
+from django.utils.translation import ugettext as _
+from accounts.utils import get_client_ip
 
 
 class ForceLogoutMiddleware(object):
+
     def process_request(self, request):
-        if (
-            request.user.is_authenticated() and
-            request.user.userprofile.force_logout_date and
-            (
-                'LAST_LOGIN_DATE' not in request.session or
-                request.session['LAST_LOGIN_DATE'] < request.user.userprofile.force_logout_date
-            )
-        ):
-            logout(request)
+        if request.user.is_authenticated():
+            if (
+                request.user.userprofile.force_logout_date and
+                (
+                    'LAST_LOGIN_DATE' not in request.session or
+                    request.session['LAST_LOGIN_DATE'] < request.user.userprofile.force_logout_date
+                )
+            ):
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    _('You have exceeded login date.')
+                )
+                logout(request)
+            # in case user is not on one of his selected networks
+            user_networks = request.user.userprofile.usernetwork_set.all()
+            if user_networks:
+                valid_network = False
+                for network in user_networks:
+                    try:
+                        if (ipaddress.ip_address(get_client_ip(request)) in ipaddress.ip_network(network, strict=False)):
+                            valid_network = True
+                    except:
+                        messages.add_message(
+                            request,
+                            messages.ERROR,
+                            _(
+                                'Network (%s) is not a valid network' % network
+                            )
+                        )
+                if not valid_network:
+                    messages.add_message(
+                        request,
+                        messages.ERROR,
+                        _(
+                            'Your Ip (%s) is not on your networks.'
+                            ' Logging you out!' % get_client_ip(request)
+                        )
+                    )
+                    logout(request)

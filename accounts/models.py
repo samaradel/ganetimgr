@@ -49,6 +49,14 @@ class UserProfile(models.Model):
         return "%s profile" % self.user
 
 
+class UserNetwork(models.Model):
+    network = models.CharField(max_length=255)
+    user = models.ForeignKey(UserProfile)
+
+    def __unicode__(self):
+        return self.network
+
+
 # Signals
 def create_user_profile(sender, instance, created, **kwargs):
     if created and not kwargs.get('raw', False):

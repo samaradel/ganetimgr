@@ -17,7 +17,14 @@
 
 
 from django.contrib import admin
-from accounts.models import UserProfile
+from accounts.models import UserProfile, UserNetwork
 
-admin.site.register(UserProfile)
 
+class UserNetworkInline(admin.TabularInline):
+    model = UserNetwork
+
+
+class UserProfileAdmin(admin.ModelAdmin):
+    inlines = [UserNetworkInline]
+
+admin.site.register(UserProfile, UserProfileAdmin)
