@@ -501,7 +501,7 @@ class Cluster(models.Model):
                         'ctime',
                         'mtime'
                     ]))
-            cache.set("cluster:%s:instances" % self.slug, instances, 180)
+            cache.set("cluster:%s:instances" % self.slug, instances, 300)
         users, orgs, groups, instanceapps, networks = preload_instance_data()
         retinstances = [
             Instance(
@@ -574,7 +574,7 @@ class Cluster(models.Model):
                 info['ctime'] = datetime.fromtimestamp(info['ctime'])
             if 'mtime' in info and info['mtime']:
                 info['mtime'] = datetime.fromtimestamp(info['mtime'])
-            cache.set("cluster:%s:info" % self.slug, info, 180)
+            cache.set("cluster:%s:info" % self.slug, info, 300)
 
         return info
 
@@ -582,7 +582,7 @@ class Cluster(models.Model):
         nodes = cache.get("cluster:%s:listnodes" % self.slug)
         if nodes is None:
             nodes = self._client.GetNodes()
-            cache.set("cluster:%s:listnodes" % self.slug, nodes, 180)
+            cache.set("cluster:%s:listnodes" % self.slug, nodes, 300)
         return nodes
 
     def get_cluster_nodes(self):
@@ -635,7 +635,7 @@ class Cluster(models.Model):
                 info['shared_storage'] = False
                 cachenodes.append(info)
             nodes = cachenodes
-            cache.set("cluster:%s:nodes" % self.slug, nodes, 180)
+            cache.set("cluster:%s:nodes" % self.slug, nodes, 300)
         return nodes
 
     def get_available_nodes(self, node_group, number_of_nodes):
@@ -656,14 +656,14 @@ class Cluster(models.Model):
         if info is None:
             #info = parseQuery(self._client.Query('group',['name', 'tags']))
             info = self._client.GetGroups(bulk=True)
-            cache.set('cluster:%s:nodegroups' % self.slug, info, 180)
+            cache.set('cluster:%s:nodegroups' % self.slug, info, 300)
         return info
 
     def get_networks(self):
         info = cache.get('cluster:%s:networks' % self.slug)
         if info is None:
             info = self._client.GetNetworks(bulk=True)
-            cache.set('cluster:%s:networks' % self.slug, info, 180)
+            cache.set('cluster:%s:networks' % self.slug, info, 300)
         return info
 
     def get_node_group_networks(self, nodegroup):
@@ -770,7 +770,7 @@ class Cluster(models.Model):
             cache.set("cluster:%s:nodegroup:%s" % (
                 self.slug,
                 nodegroup
-            ), info, 180)
+            ), info, 300)
         return info
 
     def get_node_info(self, node):
@@ -781,7 +781,7 @@ class Cluster(models.Model):
                     cache.set("cluster:%s:node:%s" % (
                         self.slug,
                         node
-                    ), info, 180)
+                    ), info, 300)
                     return info
         return info
 
@@ -816,7 +816,7 @@ class Cluster(models.Model):
                         ],
                         ["|", ["=", "name", "%s" % instance]]
                     ))[0]
-                cache.set(cache_key, info, 60)
+                cache.set(cache_key, info, 300)
             except GanetiApiError:
                 info = None
         return info

@@ -182,7 +182,6 @@ def user_index_json(request):
                 # get only enabled clusters
                 clusters = Cluster.objects.filter(disabled=False)
             p.map(_get_instances, clusters)
-        cache_timeout = 90
         if bad_clusters:
             if request.user.is_superuser:
                 djmessages.add_message(
@@ -214,8 +213,6 @@ def user_index_json(request):
                     )
                 )
                 pass
-
-            cache_timeout = 30
         j.map(_get_instance_details, instances)
         if locked_clusters:
             djmessages.add_message(
@@ -232,10 +229,8 @@ def user_index_json(request):
                     ', '.join([i.name for i in bad_instances])
                 )
             )
-            cache_timeout = 30
-
         jresp['aaData'] = instancedetails
-        cache.set(cache_key, jresp, cache_timeout)
+        cache.set(cache_key, jresp, 180)
         res = jresp
 
     return HttpResponse(json.dumps(res), content_type='application/json')
