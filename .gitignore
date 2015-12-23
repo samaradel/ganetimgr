@@ -1,5 +1,5 @@
 ganetimgr/settings.py
-ganeti.db
+*.db
 grappelli/
 *.pyc
 apache/django.wsgi
