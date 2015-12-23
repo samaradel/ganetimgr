@@ -21,7 +21,7 @@ Install packages
 Update and install the required packages::
 
     apt-get install git nginx mysql-server gunicorn python-gevent redis-server beanstalkd memcached
-    apt-get install python-mysqldb python-django python-memcache python-redis python-django-registration python-paramiko python-daemon python-setproctitle python-pycurl python-recaptcha python-ipaddr python-bs4 python-requests python-markdown
+    apt-get install python-mysqldb python-django python-memcache python-redis python-django-registration python-paramiko python-daemon python-setproctitle python-pycurl python-recaptcha python-ipaddr python-bs4 python-requests python-markdown python-ipaddress
 
 
 Fabric sript
@@ -76,7 +76,8 @@ Create database and user::
 
 Requirements.txt
 ----------------
-A requirements.txt file is included in order to help you install the required python dependencies.
+For non debian users, or people who like to use pip, a requirements.txt
+file is included in order to help you install the required python dependencies.
 You can do that by running::
 
    pip install -r requirements.txt
