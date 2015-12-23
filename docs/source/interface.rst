@@ -28,10 +28,13 @@ There is a statistics view that shows graphs and data about the user (stats , ac
 Profile
 -------
 This is the profile settings page. The user can change the profile full name, the password or the registered email address. Also SSH key management.
-The SSH keys defined here are auto-injected to the vms when an instance application is approved by the admins.
+The SSH keys defined here are auto-injected to the vms when an instance application is approved by the admins. Also a user can set the networks his
+account is permitted to login as an extra security feature.
 
 .. image:: _static/images/ss_04_user_profile.png
 	:scale: 50 %
+
+
 
 New Application
 ---------------
