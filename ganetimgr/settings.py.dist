@@ -72,12 +72,13 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'middleware.ForceLogout.ForceLogoutMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'middleware.UserMessages.UserMessageMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 )
 
 TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
