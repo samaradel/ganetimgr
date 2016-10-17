@@ -256,8 +256,8 @@ class InstanceApplication(models.Model):
         # custom params) and disk_template is just ext
         # Other disk_templates should remain untouched
         if disk_template.endswith('[ext]'):
-                provider = disk_template.replace('[ext]','')
-                disks = [{"size": self.disk_size * 1024, "provider": provider}]
+                ext_provider = disk_template.replace('[ext]','')
+                disks = [{"size": self.disk_size * 1024, "provider": ext_provider}]
                 disk_template = 'ext'
         else:
                 disks = [{"size": self.disk_size * 1024}]
